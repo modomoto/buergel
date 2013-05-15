@@ -1,0 +1,10 @@
+require 'autotest/restart'
+require 'autotest/growl'
+
+Autotest.add_hook :initialize do |at|
+  at.testlib = "minitest/autorun"
+end
+
+Autotest.add_hook :all_good do |at|
+  #system "rake rcov_info"
+end if ENV['RCOV']
