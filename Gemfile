@@ -6,8 +6,9 @@ gemspec
 gem 'iso_country_codes'
 gem 'gyoku'
 gem 'crack'
+gem 'typhoeus'
 
 group :test do
   gem 'vcr'
-  gem 'webmock'
+  gem 'typhoeus'
 end

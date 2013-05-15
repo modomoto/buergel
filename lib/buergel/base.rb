@@ -1,3 +1,4 @@
+
 require 'iso_country_codes'
 require 'gyoku'
 require "net/https"
@@ -15,8 +16,8 @@ module Buergel
       'it' => 5
     }
 
-    PRODUCTION_URL = 'https://www.buergel-online.de/rcs/xml.jsp'
-    TEST_URL = 'https://www.buergel-online.de/rcstest/xml.jsp'
+    PRODUCTION_URL = "https://www.buergel-online.de/rcs/xml.jsp"
+    TEST_URL = "https://www.buergel-online.de/rcstest/xml.jsp"
 
     def initialize(data={})
       raise(Buergel::BuergelException, "Customer id is mandatory") if Buergel.customer_no.nil?
@@ -70,19 +71,16 @@ module Buergel
     # country_code can be anything, iso2, iso3 or numeric, see http://github.com/alexrabarts/iso_country_codes
     def request first_name, last_name, street, street_no, zip, city, country_code
       xml = construct_xml first_name, last_name, street, street_no, zip, city, country_code
-      xml = CGI::escape xml# URI.escape xml
-      uri = URI.parse("#{get_url}?eing_dat=#{xml}")
-      #uri.query = URI.encode_www_form('eing_dat' => xml)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      request = Net::HTTP::Get.new(uri.request_uri)
-      request.basic_auth(Buergel.user_id , Buergel.password)
-      request.content_type = 'iso-8859-1'
-      response = http.request(request)
       
-      if response.code == "401"
+      xml = xml.encode("ISO-8859-1", :invalid => :replace, :undef => :replace, :replace => "?")
+
+      xml = CGI::escape xml
+
+      response = Typhoeus::Request.get("https://www.buergel-online.de/rcstest/xml.jsp?eing_dat=#{xml}",  :userpwd => "#{Buergel.user_id}:#{Buergel.password}")
+     
+      if response.code == 401
         raise Buergel::BuergelException, "Wrong credentials"
-      elsif response.code != "200"
+      elsif response.code != 200
         raise Buergel::BuergelException, "unknown error"
       end
       Buergel::Response.new(response.body)

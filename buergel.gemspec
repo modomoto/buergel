@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'iso_country_codes'
   spec.add_dependency 'gyoku'
   spec.add_dependency 'crack'
+  spec.add_dependency 'typhoeus'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

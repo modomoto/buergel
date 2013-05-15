@@ -29,6 +29,7 @@ describe Buergel do
   end
 
   it "different url for live and test" do
+    Buergel.test_mode = false
     @buergel.get_url.must_equal('https://www.buergel-online.de/rcs/xml.jsp')
     Buergel.test_mode = true
     @buergel.get_url.must_equal('https://www.buergel-online.de/rcstest/xml.jsp')

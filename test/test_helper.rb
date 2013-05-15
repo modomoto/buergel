@@ -7,5 +7,5 @@ require File.expand_path('../../lib/buergel.rb', __FILE__)
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
-  c.hook_into :webmock
+  c.hook_into :typhoeus
 end
