@@ -3,6 +3,7 @@ require 'iso_country_codes'
 require 'gyoku'
 require "net/https"
 require "uri"
+require 'typhoeus'
 
 module Buergel
   class Base
