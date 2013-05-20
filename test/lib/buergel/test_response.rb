@@ -77,6 +77,7 @@ describe Buergel do
     assert_raises(Buergel::BuergelException) {@r.interpret_ret_code '00400000'}
     assert_raises(Buergel::BuergelException) {@r.interpret_ret_code '00700000'}
     assert_raises(Buergel::BuergelException) {@r.interpret_ret_code '00900000'}
+    assert_raises(Buergel::BuergelInvalidAddressException) {@r.interpret_ret_code '00211000'}
   end
 
 end

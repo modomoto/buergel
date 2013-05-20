@@ -68,6 +68,8 @@ module Buergel
           raise Buergel::BuergelException, "Invalid Login for Buergel, error code: #{a} - #{b} - #{c}"
         elsif a.to_i == 7
           raise Buergel::BuergelException, "Technical problem with Buergel request, error code: #{a} - #{b} - #{c}"
+        elsif a.to_i == 2 && (b.to_i == 1100 || b.to_i == 112 || b.to_i == 111 || b.to_i == 013 || b.to_i == 101)#wrong address
+          raise Buergel::BuergelInvalidAddressException, "Invalid Address, error code: #{a} - #{b} - #{c}"
         else
           raise Buergel::BuergelException, "Invalid request data for Buergel, error code: #{a} - #{b} - #{c}"
         end
