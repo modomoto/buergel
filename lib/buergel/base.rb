@@ -43,7 +43,8 @@ module Buergel
             'SEGMENTNAME' => 'C55QN01',
             'FREMD_USERID' => "",
             'DIALOGSPRACHE' => '01',
-            'XML_MARKUP_KZ' => '02'
+            'XML_MARKUP_KZ' => '02',
+            'SUCH_ART' => Buergel.search_type #'01'
             },
           'C55QN01' => {
             'VERSANDART' => 6,

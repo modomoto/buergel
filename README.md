@@ -24,6 +24,7 @@ Add an initializer:
     Buergel.user_id = 'YOUR USERID'
     Buergel.password = 'YOUR PASSWORD'
     Buergel.test_mode = true #to enable test mode
+    Buergel.search_type = '00' or '01'
 
 Alternatively, add the following parameter to your ENV variable:
 
