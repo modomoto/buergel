@@ -2,12 +2,13 @@ require_relative "buergel/version"
 
 module Buergel
   class << self
-    attr_accessor :customer_no, :user_id, :password, :test_mode
+    attr_accessor :customer_no, :user_id, :password, :test_mode, :search_type
   end
   Buergel.customer_no = ENV['BUERGEL_CUSTOMER_NO']
   Buergel.customer_no = ENV['BUERGEL_USER_ID']
   Buergel.customer_no  = ENV['BUERGEL_PASSWORD']
   Buergel.test_mode = ENV['BUERGEL_TEST_MODE']
+  Buergel.search_type = ENV['BUERGEL_SEARCH_MODE']
 end
 
 require_relative 'buergel/base.rb'
