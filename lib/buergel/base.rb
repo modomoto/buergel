@@ -67,12 +67,12 @@ module Buergel
         raise Buergel::BuergelException, "unknown language iso"
       end
       @data['BWIDATA']['C55QN01']['LIEFERSPRACHE'] = lang_code
-    end 
+    end
 
     # queries the buergel api for a the given address
     # country_code can be anything, iso2, iso3 or numeric, see http://github.com/alexrabarts/iso_country_codes
-    def request first_name, last_name, street, street_no, zip, city, country_code
-      xml = construct_xml first_name, last_name, street, street_no, zip, city, country_code
+    def request first_name, last_name, street, street_no, zip, city, country_code, birth_date=""
+      xml = construct_xml first_name, last_name, street, street_no, zip, city, country_code, birth_date
       
       xml = xml.encode("ISO-8859-1", :invalid => :replace, :undef => :replace, :replace => "?")
 
@@ -86,7 +86,7 @@ module Buergel
       Buergel::Response.new(response.body)
     end
 
-    def construct_xml first_name, last_name, street, street_no, zip, city, country_code
+    def construct_xml first_name, last_name, street, street_no, zip, city, country_code, birth_date=""
       country_iso = IsoCountryCodes.find(country_code).numeric
       request = {
         'VORNAME' => first_name,
@@ -95,7 +95,8 @@ module Buergel
         'HAUS_NR' => street_no,
         'PLZ' => zip,
         'ORT' => city,
-        'STAAT' => country_iso
+        'STAAT' => country_iso,
+        'GEBURTSDATUM' => birth_date
       }
       @data['BWIDATA']['C55QN01'] = @data['BWIDATA']['C55QN01'].merge(request)
       '<?xml version="1.0" encoding="iso-8859-1"?>' + Gyoku.xml(@data)

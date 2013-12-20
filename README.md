@@ -46,7 +46,7 @@ you may change the response language using:
 
 ####Make a boni check:
 
-  response = buergel.request(first_name, last_name, street, street_no, zip, city, country_code)
+  response = buergel.request(first_name, last_name, street, street_no, zip, city, country_code, birthdate)
 
 country_code can be alpha2, alpha3, iso-numeric
 
