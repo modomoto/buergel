@@ -17,7 +17,7 @@ module Buergel
     def initialize (response_body)
       data = Crack::XML.parse response_body
       interpret_ret_code data['BWIDATA']['HEADER']['RETCODE']
-      response = data['BWIDATA']['C55QN53']
+      response = data['BWIDATA']['C55QN53'] || data['BWIDATA']['C55QN54']
       self.assign response
 
     end

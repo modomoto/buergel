@@ -77,7 +77,7 @@ module Buergel
       xml = xml.encode("ISO-8859-1", :invalid => :replace, :undef => :replace, :replace => "?")
 
       response = Typhoeus::Request.post(get_url, params: {:eing_dat => xml} ,  :userpwd => "#{Buergel.user_id}:#{Buergel.password}")
-    
+
       if response.code == 401
         raise Buergel::BuergelException, "Wrong credentials"
       elsif response.code != 200

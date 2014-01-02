@@ -13,6 +13,7 @@ end
 
 require_relative 'buergel/base.rb'
 require_relative 'buergel/con_check_basic.rb'
+require_relative 'buergel/con_check_move.rb'
 require_relative 'buergel/response.rb'
 require_relative 'buergel/buergel_exception.rb'
 require_relative 'buergel/buergel_invalid_address_exception.rb'
