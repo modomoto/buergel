@@ -1,8 +1,8 @@
 require_relative '../../test_helper'
- 
-describe Buergel do
 
-  it "ConCheckBasic should define correct defaults" do
+describe Buergel::ConCheckBasic do
+
+  it "should define correct defaults" do
     Buergel.customer_no = '123'
     Buergel.user_id = '321'
     Buergel.password = 'pw'

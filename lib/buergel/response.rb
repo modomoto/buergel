@@ -9,17 +9,16 @@ module Buergel
     ADDRESS_CORRECTED = 3
     ADDRESS_CORRECTED_AND_FOUND = 4
 
-    attr_accessor :first_name, :last_name, :street, :street_no, 
-    :zip, :city, :phone, :birth_date, :email, :score, 
+    attr_accessor :first_name, :last_name, :street, :street_no,
+    :zip, :city, :phone, :birth_date, :email, :score,
     :ret_code, :address_origin, :address_origin_text,
     :note
 
     def initialize (response_body)
       data = Crack::XML.parse response_body
       interpret_ret_code data['BWIDATA']['HEADER']['RETCODE']
-      response = data['BWIDATA']['C55QN53']
+      response = data['BWIDATA']['C55QN53'] || data['BWIDATA']['C55QN54']
       self.assign response
-
     end
 
     def assign response
@@ -37,7 +36,6 @@ module Buergel
       @country_code = response['STAAT']
       self.address_origin_text = response['ANSCHR_HERKUNFT_TEXT']
       self.note = response['HINWEIS_TEXT']
-
     end
 
     # defines wether the addres is unchanged or corrected
@@ -47,7 +45,7 @@ module Buergel
 
 
     #returns object of type IsoCountryCodes::Code
-    def country 
+    def country
       if(@country_code.to_i == 280)
         IsoCountryCodes.find(276) #since 1990 we use 176 for whole germany, 280 was for "west germany" WTF
       else
@@ -63,7 +61,7 @@ module Buergel
         a = ret_code[0..2]
         b = ret_code[3..6]
         c = ret_code[7]
-        
+
         if a.to_i == 9
           raise Buergel::BuergelException, "Invalid Login for Buergel, error code: #{a} - #{b} - #{c}"
         elsif a.to_i == 7

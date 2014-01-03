@@ -1,7 +1,7 @@
 # coding: utf-8
 require_relative '../../test_helper'
- 
-describe Buergel do
+
+describe Buergel::ConCheckBasic do
 # TESTS disabled, as you need credentials to run them
 #  before (:each) do
 #    Buergel.customer_no = ''
@@ -9,8 +9,8 @@ describe Buergel do
 #    Buergel.password = ''
 #    Buergel.test_mode = true
 #    @buergel = Buergel::ConCheckBasic.new()
-#  end 
-# 
+#  end
+#
 #  it "should raise exception with wrong credentials" do
 #    Buergel.customer_no = 'something'
 #    Buergel.user_id = 'Im'
@@ -19,7 +19,7 @@ describe Buergel do
 #    VCR.use_cassette('wrong_credentials') do
 #      assert_raises(Buergel::BuergelException){buergel.request("name1", "name2", "street", "123", "321", "city", "de")}
 #    end
-#  end   
+#  end
 #
 #  it "should work with various test data" do
 #    VCR.use_cassette('test data 1') do

@@ -73,11 +73,11 @@ module Buergel
     # country_code can be anything, iso2, iso3 or numeric, see http://github.com/alexrabarts/iso_country_codes
     def request first_name, last_name, street, street_no, zip, city, country_code, birth_date=""
       xml = construct_xml first_name, last_name, street, street_no, zip, city, country_code, birth_date
-      
+
       xml = xml.encode("ISO-8859-1", :invalid => :replace, :undef => :replace, :replace => "?")
 
       response = Typhoeus::Request.post(get_url, params: {:eing_dat => xml} ,  :userpwd => "#{Buergel.user_id}:#{Buergel.password}")
-    
+
       if response.code == 401
         raise Buergel::BuergelException, "Wrong credentials"
       elsif response.code != 200

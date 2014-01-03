@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["mathias@musterdenker.de"]
   spec.description   = %q{Adapter for the Bürgel BWI-Remote Connection Service }
   spec.summary       = %q{Still missing ...}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/modomoto/buergel"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
