@@ -40,4 +40,14 @@ describe Buergel::Base do
     Buergel.test_mode = false
   end
 
+  describe ':encode_to_iso_8859_1' do
+    it 'converts a given string to ISO-8859-1' do
+      buergel_base = Buergel::Base.new
+      string_to_encode = 'äöü'
+      string_to_encode.encoding.to_s.must_equal 'UTF-8'
+      result = buergel_base.encode_to_iso_8859_1 'äöü'
+      result.encoding.to_s.must_equal 'ISO-8859-1'
+    end
+  end
+
 end
