@@ -74,7 +74,7 @@ module Buergel
     def request first_name, last_name, street, street_no, zip, city, country_code, birth_date=""
       xml = construct_xml first_name, last_name, street, street_no, zip, city, country_code, birth_date
 
-      xml = encode_to_iso_8859_1 xml
+      xml = xml.encode("ISO-8859-1", :invalid => :replace, :undef => :replace, :replace => "?")
 
       response = Typhoeus::Request.post(get_url, params: {:eing_dat => xml} ,  :userpwd => "#{Buergel.user_id}:#{Buergel.password}")
 
@@ -84,10 +84,6 @@ module Buergel
         raise Buergel::BuergelException, "unknown error"
       end
       Buergel::Response.new(response.body)
-    end
-
-    def encode_to_iso_8859_1 string
-      string.force_encoding 'ISO-8859-1'
     end
 
     def construct_xml first_name, last_name, street, street_no, zip, city, country_code, birth_date=""
