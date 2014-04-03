@@ -2,11 +2,8 @@ require_relative "buergel/version"
 
 module Buergel
   class << self
+    attr_reader :search_type
     attr_accessor :customer_no, :user_id, :password, :test_mode
-
-    def search_type
-      @search_type
-    end
 
     def search_type=(new_search_type)
       raise(Buergel::BuergelException, "Search type must be nil, 00 or 01") unless [nil, '00', '01'].include?(new_search_type)
