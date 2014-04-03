@@ -2,7 +2,16 @@ require_relative "buergel/version"
 
 module Buergel
   class << self
-    attr_accessor :customer_no, :user_id, :password, :test_mode, :search_type
+    attr_accessor :customer_no, :user_id, :password, :test_mode
+
+    def search_type
+      @search_type
+    end
+
+    def search_type=(st)
+      raise(Buergel::BuergelException, "Search type must be nil, 00 or 01") unless st.nil? or st.to_s.match(/00|01/)
+      @search_type = st
+    end
   end
   Buergel.customer_no = ENV['BUERGEL_CUSTOMER_NO']
   Buergel.customer_no = ENV['BUERGEL_USER_ID']
