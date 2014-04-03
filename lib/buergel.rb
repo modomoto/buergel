@@ -8,9 +8,9 @@ module Buergel
       @search_type
     end
 
-    def search_type=(st)
-      raise(Buergel::BuergelException, "Search type must be nil, 00 or 01") unless st.nil? or st.to_s.match(/00|01/)
-      @search_type = st
+    def search_type=(new_search_type)
+      raise(Buergel::BuergelException, "Search type must be nil, 00 or 01") unless [nil, '00', '01'].include?(new_search_type)
+      @search_type = new_search_type
     end
   end
   Buergel.customer_no = ENV['BUERGEL_CUSTOMER_NO']
