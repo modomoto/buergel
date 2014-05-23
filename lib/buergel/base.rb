@@ -76,14 +76,23 @@ module Buergel
 
       xml = xml.encode("ISO-8859-1", :invalid => :replace, :undef => :replace, :replace => "?")
 
-      response = Typhoeus::Request.post(get_url, params: {:eing_dat => xml} ,  :userpwd => "#{Buergel.user_id}:#{Buergel.password}")
+      request = Typhoeus::Request.new(get_url, params: {:eing_dat => xml} ,  :userpwd => "#{Buergel.user_id}:#{Buergel.password}", :timeout => 5, :connecttimeout => 5)
 
-      if response.code == 401
-        raise Buergel::BuergelException, "Wrong credentials"
-      elsif response.code != 200
-        raise Buergel::BuergelException, "unknown error"
+      request.on_complete do |response|
+        if response.success?
+          return Buergel::Response.new(response.body)
+        elsif response.timed_out?
+          raise Buergel::BuergelException.new("Timeout occured - Buergel down?")
+        elsif response.code == 401
+          raise Buergel::BuergelException.new("Error occured - Wrong credentials")
+        elsif response.code == 0
+          raise Buergel::BuergelException.new("Error occured - HTTP code: #{response.code.to_s}")
+        else
+          raise Buergel::BuergelException.new("Error occured - HTTP code: #{response.code.to_s}")
+        end
       end
-      Buergel::Response.new(response.body)
+
+      request.run
     end
 
     def construct_xml first_name, last_name, street, street_no, zip, city, country_code, birth_date=""
